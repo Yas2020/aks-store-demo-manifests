@@ -73,7 +73,7 @@ metadata:
   name: store-front
 spec:
   selector:
-    istio: aks-istio-ingressgateway-external
+    istio: istio-ingressgateway
   servers:
     - port:
         number: 80
