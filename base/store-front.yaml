@@ -16,7 +16,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: store-front
-        image: ghcr.io/yas2020/aks-store-demo/store-front:1.0.0 # {"$imagepolicy": "flux-system:store-front"}
+        image: ghcr.io/yas2020/aks-store-demo/store-front:2.0.0 # {"$imagepolicy": "flux-system:store-front"}
         ports:
         - containerPort: 8080
           name: store-front
