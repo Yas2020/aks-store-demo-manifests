@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - makeline-service.yaml
 - mongodb.yaml
-- order-service.yaml
+# - order-service.yaml
 - product-service.yaml
 - rabbitmq.yaml
 - store-admin.yaml
