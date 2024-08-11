@@ -58,6 +58,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: store-front
+  namespace: istio-system
 spec:
   selector:
     istio: ingressgateway
@@ -70,10 +71,57 @@ spec:
         - "*"
 ---
 apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: error-rate
+  namespace: dev
+spec:
+  provider:
+    address: http://prometheus-prometheus.monitoring:9090
+    type: prometheus
+  query: |
+    100 - rate(
+      http_requests_total{
+        namespace="{{ namespace }}",
+        destination_workload=~"{{ target }}",
+        status!~"5.*"
+      }[{{ interval }}]) 
+    / 
+    rate(
+      http_requests_total{
+        namespace="{{ namespace }}",
+        destination_workload=~"{{ target }}"
+      }[{{ interval }}]
+    ) * 100
+---
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: latency
+  namespace: test
+spec:
+  provider:
+    address: http://prometheus-prometheus.monitoring:9090
+    type: prometheus
+  query: |
+    histogram_quantile(0.99,
+      sum(
+        rate(
+          istio_request_duration_seconds_bucket{
+            namespace="{{ namespace }}",
+            destination_workload=~"{{ target }}"
+          }[{{ interval }}]
+        )
+      ) by (le)
+    )
+---
+apiVersion: flagger.app/v1beta1
 kind: Canary
 metadata:
   name: store-front
+  namespace: dev
 spec:
+  provider: istio
   targetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -81,30 +129,31 @@ spec:
   progressDeadlineSeconds: 60
   service:
     port: 80
-    targetPort: 8080 # make sure this matches container port
+    targetPort: 8080 
     portDiscovery: true
     hosts:
       - "*"
     gateways:
-      - store-front
+      - istio-system/store-front
   analysis:
-    interval: 1m
-    threshold: 10
-    maxWeight: 20
+    interval: 30s
+    iterations: 10
+    threshold: 2
+    maxWeight: 30
     stepWeight: 10
     metrics:
-      - name: request-success-rate
-        thresholdRange:
-          min: 99
-        interval: 1m
-      - name: request-duration
-        thresholdRange:
-          max: 500
-        interval: 30s
-      - name: error-rate
-        thresholdRange:
-          max: 10
-        interval: 30s
+    - name: error-rate
+      templateRef:
+        name: error-rate
+      thresholdRange:
+        max: 1
+      interval: 30s
+    - name: latency
+      templateRef:
+        name: latency
+      thresholdRange:
+        max: 0.5
+      interval: 30s
     webhooks:
       - name: acceptance-test
         type: pre-rollout
