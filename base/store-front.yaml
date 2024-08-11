@@ -58,7 +58,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: store-front
-  namespace: istio-system
+  namespace: dev
 spec:
   selector:
     istio: ingressgateway
@@ -134,7 +134,7 @@ spec:
     hosts:
       - "*"
     gateways:
-      - istio-system/store-front
+      - store-front
   analysis:
     interval: 30s
     iterations: 10
