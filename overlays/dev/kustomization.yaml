@@ -5,6 +5,6 @@ resources:
 - ../../base
 namespace: dev
 images:
-- name: ghcr.io/pauldotyu/aks-store-demo/store-front
-  newName: ghcr.io/pauldotyu/aks-store-demo/store-front # {"$imagepolicy": "flux-system:store-front:name"}
+- name: ghcr.io/yas2020/aks-store-demo/store-front
+  newName: ghcr.io/yas2020/aks-store-demo/store-front # {"$imagepolicy": "flux-system:store-front:name"}
   newTag: latest # {"$imagepolicy": "flux-system:store-front:tag"}
