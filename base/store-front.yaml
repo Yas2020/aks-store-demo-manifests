@@ -98,7 +98,7 @@ apiVersion: flagger.app/v1beta1
 kind: MetricTemplate
 metadata:
   name: latency
-  namespace: test
+  namespace: dev
 spec:
   provider:
     address: http://prometheus-prometheus.monitoring:9090
