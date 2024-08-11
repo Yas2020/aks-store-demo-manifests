@@ -108,13 +108,13 @@ spec:
     webhooks:
       - name: acceptance-test
         type: pre-rollout
-        url: http://flagger-loadtester.dev/
+        url: http://flagger-loadtester.flagger-system/
         timeout: 60s
         metadata:
           type: bash
           cmd: "curl -s http://store-front-canary.dev"
       - name: load-test
-        url: http://flagger-loadtester.dev/
+        url: http://flagger-loadtester.flagger-system/
         timeout: 5s
         metadata:
           cmd: "hey -z 1m -q 10 -c 2 http://store-front-canary.dev"
