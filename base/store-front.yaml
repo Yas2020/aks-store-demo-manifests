@@ -139,8 +139,8 @@ spec:
     interval: 30s
     iterations: 10
     threshold: 2
-    maxWeight: 30
-    stepWeight: 10
+    # maxWeight: 30
+    # stepWeight: 10
     metrics:
     - name: error-rate
       templateRef:
