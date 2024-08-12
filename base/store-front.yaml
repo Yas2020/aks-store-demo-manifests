@@ -142,17 +142,17 @@ spec:
     # maxWeight: 30
     # stepWeight: 10
     metrics:
-    - name: error-rate
-      templateRef:
-        name: error-rate
+    - name: request-success-rate
+      # minimum req success rate (non 5xx responses)
+      # percentage (0-100)
       thresholdRange:
-        max: 1
-      interval: 30s
-    - name: latency
-      templateRef:
-        name: latency
+        min: 99
+      interval: 1m
+    - name: request-duration
+      # maximum req duration P99
+      # milliseconds
       thresholdRange:
-        max: 0.5
+        max: 500
       interval: 30s
     webhooks:
       - name: acceptance-test
