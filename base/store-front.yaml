@@ -136,7 +136,7 @@ spec:
     gateways:
       - store-front
   analysis:
-    interval: 30s
+    interval: 2m
     iterations: 10
     threshold: 2
     # maxWeight: 30
@@ -147,13 +147,13 @@ spec:
       # percentage (0-100)
       thresholdRange:
         min: 99
-      interval: 1m
+      interval: 2m
     - name: request-duration
       # maximum req duration P99
       # milliseconds
       thresholdRange:
         max: 500
-      interval: 30s
+      interval: 2m
     webhooks:
       - name: acceptance-test
         type: pre-rollout
