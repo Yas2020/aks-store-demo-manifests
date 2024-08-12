@@ -77,7 +77,7 @@ metadata:
   namespace: dev
 spec:
   provider:
-    address: http://prometheus-prometheus.monitoring:9090
+    address: http://prometheus.istio-system:9090
     type: prometheus
   query: |
     100 - rate(
@@ -101,7 +101,7 @@ metadata:
   namespace: dev
 spec:
   provider:
-    address: http://prometheus-prometheus.monitoring:9090
+    address: http://prometheus.istio-system:9090
     type: prometheus
   query: |
     histogram_quantile(0.99,
