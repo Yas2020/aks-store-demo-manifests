@@ -7,4 +7,4 @@ namespace: dev
 images:
 - name: ghcr.io/yas2020/aks-store-demo/store-front
   newName: ghcr.io/yas2020/aks-store-demo/store-front # {"$imagepolicy": "flux-system:store-front:name"}
-  newTag: 3.0.16 # {"$imagepolicy": "flux-system:store-front:tag"}
+  newTag: 3.0.17 # {"$imagepolicy": "flux-system:store-front:tag"}
