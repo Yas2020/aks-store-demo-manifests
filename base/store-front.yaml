@@ -137,7 +137,7 @@ spec:
       - store-front
   analysis:
     interval: 2m
-    iterations: 10
+    iterations: 3
     threshold: 2
     # maxWeight: 30
     # stepWeight: 10
